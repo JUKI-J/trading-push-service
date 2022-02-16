@@ -1,0 +1,14 @@
+server:
+  port: 9110
+
+spring:
+  application:
+    name: PUSH-SERVICE
+  config:
+    import:
+      - optional:configserver:https://setlog.net/trading-config-server/
+  zipkin:
+    base-url: http://setlog.net:9411/
+  sleuth:
+    sampler:
+      probability: 1.0

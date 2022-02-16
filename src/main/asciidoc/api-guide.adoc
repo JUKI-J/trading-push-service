@@ -1,0 +1,16 @@
+= trading-push-service API Documents
+:toc: left
+
+== push API guide
+.Http Request
+include::{snippets}/telegram/http-request.adoc[]
+
+.Http Response
+include::{snippets}/telegram/http-response.adoc[]
+
+== push API guide22
+.Http Request
+include::{snippets}/telegram/http-request.adoc[]
+
+.Http Response
+include::{snippets}/telegram/http-response.adoc[]
