@@ -7,6 +7,7 @@ spring:
   config:
     import:
       - optional:configserver:https://setlog.net/trading-config-server/
+      - optional:classpath:telegram.yml
   zipkin:
     base-url: http://setlog.net:9411/
   sleuth:

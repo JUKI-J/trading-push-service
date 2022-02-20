@@ -1,0 +1,6 @@
+telegram:
+  api:
+    botToken:
+    chatId:
+    username:
+    enabled: true
