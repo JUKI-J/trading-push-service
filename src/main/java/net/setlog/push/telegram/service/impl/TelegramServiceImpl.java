@@ -15,6 +15,7 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 
 @Service
@@ -29,21 +30,22 @@ public class TelegramServiceImpl implements TelegramService {
     public void send(TelegramPushVO telegramPushVO) throws Exception {
 
         if (telegramConfiguration.isEnabled()) {
-            String url = "https://api.telegram.org/" + telegramConfiguration.getBotToken() + "/sendMessage";
+
+            //https://api.telegram.org/bot5276151542:AAET4E6wuJlZcXBmRACD0RxRKAFcxthgOGw/sendmessage?chat_id=5256370974&text=good
+            String url = String.format("https://api.telegram.org/bot%s/sendmessage", telegramConfiguration.getBotToken());
+
             try {
                 RestTemplate restTemplate = new RestTemplate();
                 HttpHeaders headers = new HttpHeaders();
-                headers.setContentType(new MediaType("application","json", Charset.forName("UTF-8")));    //Response Header to UTF-8
+                headers.setContentType(new MediaType("application","json", Charset.forName("UTF-8")));
 
                 UriComponents builder = UriComponentsBuilder.fromHttpUrl(url)
                         .queryParam("chat_id", telegramConfiguration.getChatId())
                         .queryParam("text", telegramPushVO.getMessage())
-                        .build(true);
-
-                log.info("builder : {}", builder);
-
+                        .build()
+                ;
                 Object response = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, new HttpEntity<String>(headers), String.class);
-                log.debug("-----telegram response : {}", response);
+                log.info("-----telegram response : {}", response);
             } catch (Exception e) {
                 log.error("Unhandled exception occurred while send Telegram.", e);
             }
