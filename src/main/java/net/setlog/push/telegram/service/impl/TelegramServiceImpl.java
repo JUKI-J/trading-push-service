@@ -31,7 +31,6 @@ public class TelegramServiceImpl implements TelegramService {
 
         if (telegramConfiguration.isEnabled()) {
 
-            //https://api.telegram.org/bot5276151542:AAET4E6wuJlZcXBmRACD0RxRKAFcxthgOGw/sendmessage?chat_id=5256370974&text=good
             String url = String.format("https://api.telegram.org/bot%s/sendmessage", telegramConfiguration.getBotToken());
 
             try {
