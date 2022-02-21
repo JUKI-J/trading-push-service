@@ -5,17 +5,14 @@ import lombok.extern.slf4j.Slf4j;
 import net.setlog.push.telegram.config.TelegramConfiguration;
 import net.setlog.push.telegram.service.TelegramService;
 import net.setlog.push.telegram.vo.TelegramPushVO;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
+import net.setlog.push.telegram.vo.api.TelegramResultVO;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 
 
 @Service
@@ -27,7 +24,9 @@ public class TelegramServiceImpl implements TelegramService {
     private final RestTemplate restTemplate;
 
     @Override
-    public void send(TelegramPushVO telegramPushVO) throws Exception {
+    public TelegramResultVO send(TelegramPushVO telegramPushVO) throws Exception {
+
+        TelegramResultVO telegramResultVO = new TelegramResultVO();
 
         if (telegramConfiguration.isEnabled()) {
 
@@ -38,18 +37,23 @@ public class TelegramServiceImpl implements TelegramService {
                 HttpHeaders headers = new HttpHeaders();
                 headers.setContentType(new MediaType("application","json", Charset.forName("UTF-8")));
 
-                UriComponents builder = UriComponentsBuilder.fromHttpUrl(url)
+                UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url)
                         .queryParam("chat_id", telegramConfiguration.getChatId())
                         .queryParam("text", telegramPushVO.getMessage())
                         .build()
                 ;
-                Object response = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, new HttpEntity<String>(headers), String.class);
-                log.info("-----telegram response : {}", response);
+
+                log.debug("-----UriComponents : {}", uriComponents.toUriString());
+                telegramResultVO = restTemplate.getForObject(uriComponents.toUriString(), TelegramResultVO.class);
+
             } catch (Exception e) {
                 log.error("Unhandled exception occurred while send Telegram.", e);
             }
+        }else{
+            log.error("Exception occurred before send Telegram. [ telegramConfiguration.isEnabled() : {} ]", telegramConfiguration.isEnabled());
         }
 
-
+        log.info("-----telegramResultVO : {}", telegramResultVO);
+        return telegramResultVO;
     }
 }
