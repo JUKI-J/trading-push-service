@@ -26,6 +26,17 @@ public class TelegramServiceImpl implements TelegramService {
     @Override
     public TelegramResultVO send(TelegramPushVO telegramPushVO) throws Exception {
         TelegramResultVO telegramResultVO = new TelegramResultVO();
+
+        //TelegramPushVO
+
+        //private String message;
+        //private String chatId;
+
+
+
+
+
+
         if (telegramConfiguration.isEnabled()) {
             String url = String.format("https://api.telegram.org/bot%s/sendmessage", telegramConfiguration.getBotToken());
             try {

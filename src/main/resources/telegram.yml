@@ -1,3 +1,35 @@
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+
+telegram:
+  api:
+    botToken:
+    chatId:
+    username:
+    enabled: true
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+telegram:
+  api:
+    botToken:
+    chatId:
+    username:
+    enabled: true
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+
 telegram:
   api:
     botToken:

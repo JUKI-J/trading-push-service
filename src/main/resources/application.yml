@@ -4,14 +4,17 @@ server:
     context-path: /push
 
 spring:
+  profiles:
+    default: local
   application:
     name: PUSH-SERVICE
   config:
     import:
-      - optional:configserver:https://setlog.net/trading-config-server/
+      - optional:configserver:https://centos-blog/trading-config-server/
       - optional:classpath:telegram.yml
+      - optional:classpath:mongodb.yml
   zipkin:
-    base-url: http://setlog.net:9411/
+    base-url: http://centos-blog:9411/
   sleuth:
     sampler:
       probability: 1.0

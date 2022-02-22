@@ -1,0 +1,37 @@
+spring:
+  config:
+    activate:
+      on-profile: local
+  data:
+    mongodb:
+      host:
+      port:
+      database:
+      username:
+      password:
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  data:
+    mongodb:
+      host:
+      port:
+      database:
+      username:
+      password:
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  data:
+    mongodb:
+      host:
+      port:
+      database:
+      username:
+      password:
